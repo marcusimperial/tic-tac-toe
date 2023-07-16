@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 import { randomBytes } from 'crypto';
 
 const uri = process.env.MONGODB_URI;
-const database = process.env.DATABASE;
+const database = process.env.MONGODB_DATABASE;
 
 const client = new MongoClient(uri);
 
@@ -11,7 +11,7 @@ export const getGames = async (uid) => {
     try {
         await client.connect();
         const db = client.db(database);
-        const op = await db.collection('games').find({ uid, opponent: uid }).toArray();
+        const op = await db.collection('games').find({ uid }).toArray();
         if (!op) return false;
         return op;
     } catch (e) {

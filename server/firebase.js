@@ -17,21 +17,23 @@ export const verifyToken = async (token = '') => {
 };
 
 export const getGame = async (gameId) => {
-    if (!gameId) return;
+    if (!gameId) return false;
     try {
         const docs = await getFirestore().collection('games').doc(gameId).collection('rounds').get();
         if (!docs) return false;
-        return docs;
+        let docsArray = [];
+        docs.forEach((doc) => docsArray.push(doc.data()));
+        return docsArray;
     } catch (e) {
         console.error(e);
         return false;
     }
 };
 
-export const startGame = async (gameId) => {
-    if (!gameId) return;
+export const startGame = async (gameId, type, uid) => {
+    if (!gameId || !type || !uid) return false;
     try {
-        const op = await getFirestore().collection('games').doc(gameId).create({ gameId });
+        const op = await getFirestore().collection('games').doc(gameId).create({ gameId, type, uid });
         if (!op) return false;
         return op;
     } catch (e) {

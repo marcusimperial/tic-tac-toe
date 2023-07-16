@@ -1,4 +1,4 @@
-const path = 'http://localhost:5000/tic-tac-toe-a526f/us-central1/api';
+const path = `https://asia-southeast1-tic-tac-toe-a526f.cloudfunctions.net/api`;
 
 export const getGames = async (token) => {
     try {

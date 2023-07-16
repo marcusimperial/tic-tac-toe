@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { https } from 'firebase-functions';
+import { https, region } from 'firebase-functions';
 import { authHandler, createHandler, enterHandler, getHandler, updateHandler } from './handlers.js';
 
 const app = express();
@@ -16,4 +16,4 @@ app.route('/games/:gameId').post(enterHandler).put(updateHandler);
 
 app.get('/', async (req, res) => res.send('hi'));
 
-export const api = https.onRequest(app);
+export const api = region('asia-southeast1').https.onRequest(app);

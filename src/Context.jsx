@@ -24,6 +24,8 @@ const AppContext = ({ children }) => {
 
     const [turn, setTurn] = useState(randomizer ? player : opponent);
 
+    useEffect(() => setTurn(randomizer ? player : opponent), [player, opponent]);
+
     const [utility, setUtility] = useState({ active: false });
     const utilize = (type, message) => {
         return new Promise(resolve => setUtility({ resolve, type, message, active: true }) );
@@ -31,26 +33,25 @@ const AppContext = ({ children }) => {
 
     const [user, setUser] = useState();
 
-    useEffect(() => onAuthStateChanged(getAuth(), user => {
+    useEffect(() => onAuthStateChanged(getAuth(), async (user) => {
         if (!user) return signInAnonymously(getAuth());
-        getToken();
+        const latest = await getAuth()?.currentUser?.getIdTokenResult(true);
+        setUser({ ...latest, ...latest?.claims });
     }), [])
 
     const getToken = async () =>{
         const latest = await getAuth()?.currentUser?.getIdTokenResult(true);
-        console.log({ ...latest, ...latest?.claims });
-        setUser({ ...latest, ...latest?.claims });
         return latest?.token;
     };
 
-    const q = query(collection(getFirestore(), "games"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-    const cities = [];
-    querySnapshot.forEach((doc) => {
-        cities.push(doc.data());
-    });
-    console.log("DATA CHANGE ", cities);
-    });
+    // const q = query(collection(getFirestore(), "games"));
+    // const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    // const cities = [];
+    // querySnapshot.forEach((doc) => {
+    //     cities.push(doc.data());
+    // });
+    // console.log("DATA CHANGE ", cities);
+    // });
 
     const values = { 
         utility, utilize, setUtility,

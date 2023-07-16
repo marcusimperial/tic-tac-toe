@@ -28,7 +28,7 @@ export const createHandler = async (req, res) => {
     try {
         const op = await createGame(res.user?.uid, req.params.type);
         if (!op) return res.json({ status: false, message: 'Could not create a game.' });
-        const start = await startGame(op);
+        const start = await startGame(op, req.params.type, res.user?.uid);
         if (!start) return res.json({ status: false, message: 'Could not start game.' });
         return res.json({ status: true, id: op });
     } catch (e) {
