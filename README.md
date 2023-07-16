@@ -49,7 +49,7 @@ requests.js
 2. The app is built on `React` and is supplemented by `TailwindCSS` as the CSS framework.
 3. Both are supported by `Firebase`, specifically `Auth` and `Firestore` (for frontend data transfers).
 
-*Special note on usage of Firebase: Firebase, specifically, Firestore was used to allow future support for a mutliplayer mode via realtime updates as well as due to its coherence with the Auth service; it's used for communication more than data handling, which MongoDB does.*
+*Special note on usage of Firebase: Firebase, (specifically, Firestore) was used to allow future support for a multiplayer mode via realtime updates as well as due to its coherence with its own Auth service; it's used for communication more than data handling, which MongoDB does.*
 
 ## Access the [API](https://asia-southeast1-tic-tac-toe-a526f.cloudfunctions.net/api)
 
@@ -57,7 +57,7 @@ requests.js
 
 The API is stored inside of the `server` folder. Local testing follows the same flow as the React app with exception of the variables: 
 
-*Note: The API also uses Google's Application Default Credentials (ADC) in conjunction with firebase-tools; this means that an account with access to this project must be logged in*
+*Note: The API also uses Google's Application Default Credentials (ADC) in conjunction with firebase-tools; this means that an account (with access to this project) must be logged in.*
 
 ```
 MONGODB_URI=
